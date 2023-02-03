@@ -1,0 +1,4447 @@
+type Query {
+  Usuario(id: String!, draft: Boolean): Usuario
+  Usuarios(where: Usuario_where, draft: Boolean, page: Int, limit: Int, sort: String): Usuarios
+  docAccessUsuario(id: String!): UsuariosDocAccess
+  meUsuario: UsuariosMe
+  initializedUsuario: Boolean
+  Media(id: String!, draft: Boolean): Media
+  allMedia(where: Media_where, draft: Boolean, page: Int, limit: Int, sort: String): allMedia
+  docAccessMedia(id: String!): mediaDocAccess
+  Audio(id: String!, draft: Boolean): Audio
+  allAudio(where: Audio_where, draft: Boolean, page: Int, limit: Int, sort: String): allAudio
+  docAccessAudio(id: String!): audioDocAccess
+  RevistaCategoria(id: String!, draft: Boolean): RevistaCategoria
+  RevistaCategorias(where: RevistaCategoria_where, draft: Boolean, page: Int, limit: Int, sort: String): RevistaCategorias
+  docAccessRevistaCategoria(id: String!): revista_categoriaDocAccess
+  RevistaContent(id: String!, draft: Boolean): RevistaContent
+  RevistaContents(where: RevistaContent_where, draft: Boolean, page: Int, limit: Int, sort: String): RevistaContents
+  docAccessRevistaContent(id: String!): revista_contentDocAccess
+  Preference(key: String): Preference
+  Access: Access
+}
+
+type Usuario {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  role: Usuario_role
+  enableAPIKey: Boolean
+  apiKey: String
+  apiKeyIndex: String
+  email: EmailAddress
+  resetPasswordToken: String
+  resetPasswordExpiration: DateTime
+  loginAttempts: Float
+  lockUntil: DateTime
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+enum Usuario_role {
+  _30
+  _20
+  _10
+}
+
+"""
+A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+"""
+scalar EmailAddress @specifiedBy(url: "https://www.w3.org/Protocols/rfc822/")
+
+type Usuarios {
+  docs: [Usuario]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input Usuario_where {
+  role: Usuario_role_operator
+  enableAPIKey: Usuario_enableAPIKey_operator
+  apiKey: Usuario_apiKey_operator
+  email: Usuario_email_operator
+  id: Usuario_id_operator
+  createdAt: Usuario_createdAt_operator
+  updatedAt: Usuario_updatedAt_operator
+  OR: [Usuario_where_or]
+  AND: [Usuario_where_and]
+}
+
+input Usuario_role_operator {
+  equals: Usuario_role_Input
+  not_equals: Usuario_role_Input
+  in: [Usuario_role_Input]
+  not_in: [Usuario_role_Input]
+  all: [Usuario_role_Input]
+  exists: Boolean
+}
+
+enum Usuario_role_Input {
+  _30
+  _20
+  _10
+}
+
+input Usuario_enableAPIKey_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input Usuario_apiKey_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Usuario_email_operator {
+  equals: EmailAddress
+  not_equals: EmailAddress
+  like: EmailAddress
+  contains: EmailAddress
+  in: [EmailAddress]
+  not_in: [EmailAddress]
+  all: [EmailAddress]
+  exists: Boolean
+}
+
+input Usuario_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+input Usuario_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Usuario_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Usuario_where_or {
+  role: Usuario_role_operator
+  enableAPIKey: Usuario_enableAPIKey_operator
+  apiKey: Usuario_apiKey_operator
+  email: Usuario_email_operator
+  id: Usuario_id_operator
+  createdAt: Usuario_createdAt_operator
+  updatedAt: Usuario_updatedAt_operator
+}
+
+input Usuario_where_and {
+  role: Usuario_role_operator
+  enableAPIKey: Usuario_enableAPIKey_operator
+  apiKey: Usuario_apiKey_operator
+  email: Usuario_email_operator
+  id: Usuario_id_operator
+  createdAt: Usuario_createdAt_operator
+  updatedAt: Usuario_updatedAt_operator
+}
+
+type UsuariosDocAccess {
+  fields: UsuariosDocAccessFields
+  create: UsuariosCreateDocAccess
+  read: UsuariosReadDocAccess
+  update: UsuariosUpdateDocAccess
+  delete: UsuariosDeleteDocAccess
+  unlock: UsuariosUnlockDocAccess
+}
+
+type UsuariosDocAccessFields {
+  role: UsuariosDocAccessFields_role
+  enableAPIKey: UsuariosDocAccessFields_enableAPIKey
+  apiKey: UsuariosDocAccessFields_apiKey
+  email: UsuariosDocAccessFields_email
+  password: UsuariosDocAccessFields_password
+}
+
+type UsuariosDocAccessFields_role {
+  create: UsuariosDocAccessFields_role_Create
+  read: UsuariosDocAccessFields_role_Read
+  update: UsuariosDocAccessFields_role_Update
+  delete: UsuariosDocAccessFields_role_Delete
+}
+
+type UsuariosDocAccessFields_role_Create {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_role_Read {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_role_Update {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_role_Delete {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_enableAPIKey {
+  create: UsuariosDocAccessFields_enableAPIKey_Create
+  read: UsuariosDocAccessFields_enableAPIKey_Read
+  update: UsuariosDocAccessFields_enableAPIKey_Update
+  delete: UsuariosDocAccessFields_enableAPIKey_Delete
+}
+
+type UsuariosDocAccessFields_enableAPIKey_Create {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_enableAPIKey_Read {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_enableAPIKey_Update {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_enableAPIKey_Delete {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_apiKey {
+  create: UsuariosDocAccessFields_apiKey_Create
+  read: UsuariosDocAccessFields_apiKey_Read
+  update: UsuariosDocAccessFields_apiKey_Update
+  delete: UsuariosDocAccessFields_apiKey_Delete
+}
+
+type UsuariosDocAccessFields_apiKey_Create {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_apiKey_Read {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_apiKey_Update {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_apiKey_Delete {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_email {
+  create: UsuariosDocAccessFields_email_Create
+  read: UsuariosDocAccessFields_email_Read
+  update: UsuariosDocAccessFields_email_Update
+  delete: UsuariosDocAccessFields_email_Delete
+}
+
+type UsuariosDocAccessFields_email_Create {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_email_Read {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_email_Update {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_email_Delete {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_password {
+  create: UsuariosDocAccessFields_password_Create
+  read: UsuariosDocAccessFields_password_Read
+  update: UsuariosDocAccessFields_password_Update
+  delete: UsuariosDocAccessFields_password_Delete
+}
+
+type UsuariosDocAccessFields_password_Create {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_password_Read {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_password_Update {
+  permission: Boolean!
+}
+
+type UsuariosDocAccessFields_password_Delete {
+  permission: Boolean!
+}
+
+type UsuariosCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+type UsuariosReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsuariosUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsuariosDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsuariosUnlockDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsuariosMe {
+  token: String
+  user: Usuario
+  exp: Int
+  collection: String
+}
+
+type Media {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+  sizes: Media_Sizes
+}
+
+type Media_Sizes {
+  thumbnail: Media_Sizes_Thumbnail
+  card: Media_Sizes_Card
+  tablet: Media_Sizes_Tablet
+}
+
+type Media_Sizes_Thumbnail {
+  url: String
+  width: Float
+  height: Float
+  mimeType: String
+  filesize: Float
+  filename: String
+}
+
+type Media_Sizes_Card {
+  url: String
+  width: Float
+  height: Float
+  mimeType: String
+  filesize: Float
+  filename: String
+}
+
+type Media_Sizes_Tablet {
+  url: String
+  width: Float
+  height: Float
+  mimeType: String
+  filesize: Float
+  filename: String
+}
+
+type allMedia {
+  docs: [Media]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input Media_where {
+  url: Media_url_operator
+  filename: Media_filename_operator
+  mimeType: Media_mimeType_operator
+  filesize: Media_filesize_operator
+  width: Media_width_operator
+  height: Media_height_operator
+  sizes__thumbnail__url: Media_sizes__thumbnail__url_operator
+  sizes__thumbnail__width: Media_sizes__thumbnail__width_operator
+  sizes__thumbnail__height: Media_sizes__thumbnail__height_operator
+  sizes__thumbnail__mimeType: Media_sizes__thumbnail__mimeType_operator
+  sizes__thumbnail__filesize: Media_sizes__thumbnail__filesize_operator
+  sizes__thumbnail__filename: Media_sizes__thumbnail__filename_operator
+  sizes__card__url: Media_sizes__card__url_operator
+  sizes__card__width: Media_sizes__card__width_operator
+  sizes__card__height: Media_sizes__card__height_operator
+  sizes__card__mimeType: Media_sizes__card__mimeType_operator
+  sizes__card__filesize: Media_sizes__card__filesize_operator
+  sizes__card__filename: Media_sizes__card__filename_operator
+  sizes__tablet__url: Media_sizes__tablet__url_operator
+  sizes__tablet__width: Media_sizes__tablet__width_operator
+  sizes__tablet__height: Media_sizes__tablet__height_operator
+  sizes__tablet__mimeType: Media_sizes__tablet__mimeType_operator
+  sizes__tablet__filesize: Media_sizes__tablet__filesize_operator
+  sizes__tablet__filename: Media_sizes__tablet__filename_operator
+  id: Media_id_operator
+  createdAt: Media_createdAt_operator
+  updatedAt: Media_updatedAt_operator
+  OR: [Media_where_or]
+  AND: [Media_where_and]
+}
+
+input Media_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_sizes__thumbnail__url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_sizes__thumbnail__width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_sizes__thumbnail__height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_sizes__thumbnail__mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_sizes__thumbnail__filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_sizes__thumbnail__filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_sizes__card__url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_sizes__card__width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_sizes__card__height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_sizes__card__mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_sizes__card__filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_sizes__card__filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_sizes__tablet__url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_sizes__tablet__width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_sizes__tablet__height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_sizes__tablet__mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_sizes__tablet__filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_sizes__tablet__filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Media_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Media_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Media_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Media_where_or {
+  url: Media_url_operator
+  filename: Media_filename_operator
+  mimeType: Media_mimeType_operator
+  filesize: Media_filesize_operator
+  width: Media_width_operator
+  height: Media_height_operator
+  sizes__thumbnail__url: Media_sizes__thumbnail__url_operator
+  sizes__thumbnail__width: Media_sizes__thumbnail__width_operator
+  sizes__thumbnail__height: Media_sizes__thumbnail__height_operator
+  sizes__thumbnail__mimeType: Media_sizes__thumbnail__mimeType_operator
+  sizes__thumbnail__filesize: Media_sizes__thumbnail__filesize_operator
+  sizes__thumbnail__filename: Media_sizes__thumbnail__filename_operator
+  sizes__card__url: Media_sizes__card__url_operator
+  sizes__card__width: Media_sizes__card__width_operator
+  sizes__card__height: Media_sizes__card__height_operator
+  sizes__card__mimeType: Media_sizes__card__mimeType_operator
+  sizes__card__filesize: Media_sizes__card__filesize_operator
+  sizes__card__filename: Media_sizes__card__filename_operator
+  sizes__tablet__url: Media_sizes__tablet__url_operator
+  sizes__tablet__width: Media_sizes__tablet__width_operator
+  sizes__tablet__height: Media_sizes__tablet__height_operator
+  sizes__tablet__mimeType: Media_sizes__tablet__mimeType_operator
+  sizes__tablet__filesize: Media_sizes__tablet__filesize_operator
+  sizes__tablet__filename: Media_sizes__tablet__filename_operator
+  id: Media_id_operator
+  createdAt: Media_createdAt_operator
+  updatedAt: Media_updatedAt_operator
+}
+
+input Media_where_and {
+  url: Media_url_operator
+  filename: Media_filename_operator
+  mimeType: Media_mimeType_operator
+  filesize: Media_filesize_operator
+  width: Media_width_operator
+  height: Media_height_operator
+  sizes__thumbnail__url: Media_sizes__thumbnail__url_operator
+  sizes__thumbnail__width: Media_sizes__thumbnail__width_operator
+  sizes__thumbnail__height: Media_sizes__thumbnail__height_operator
+  sizes__thumbnail__mimeType: Media_sizes__thumbnail__mimeType_operator
+  sizes__thumbnail__filesize: Media_sizes__thumbnail__filesize_operator
+  sizes__thumbnail__filename: Media_sizes__thumbnail__filename_operator
+  sizes__card__url: Media_sizes__card__url_operator
+  sizes__card__width: Media_sizes__card__width_operator
+  sizes__card__height: Media_sizes__card__height_operator
+  sizes__card__mimeType: Media_sizes__card__mimeType_operator
+  sizes__card__filesize: Media_sizes__card__filesize_operator
+  sizes__card__filename: Media_sizes__card__filename_operator
+  sizes__tablet__url: Media_sizes__tablet__url_operator
+  sizes__tablet__width: Media_sizes__tablet__width_operator
+  sizes__tablet__height: Media_sizes__tablet__height_operator
+  sizes__tablet__mimeType: Media_sizes__tablet__mimeType_operator
+  sizes__tablet__filesize: Media_sizes__tablet__filesize_operator
+  sizes__tablet__filename: Media_sizes__tablet__filename_operator
+  id: Media_id_operator
+  createdAt: Media_createdAt_operator
+  updatedAt: Media_updatedAt_operator
+}
+
+type mediaDocAccess {
+  fields: MediaDocAccessFields
+  create: MediaCreateDocAccess
+  read: MediaReadDocAccess
+  update: MediaUpdateDocAccess
+  delete: MediaDeleteDocAccess
+}
+
+type MediaDocAccessFields {
+  url: MediaDocAccessFields_url
+  filename: MediaDocAccessFields_filename
+  mimeType: MediaDocAccessFields_mimeType
+  filesize: MediaDocAccessFields_filesize
+  width: MediaDocAccessFields_width
+  height: MediaDocAccessFields_height
+  sizes: MediaDocAccessFields_sizes
+}
+
+type MediaDocAccessFields_url {
+  create: MediaDocAccessFields_url_Create
+  read: MediaDocAccessFields_url_Read
+  update: MediaDocAccessFields_url_Update
+  delete: MediaDocAccessFields_url_Delete
+}
+
+type MediaDocAccessFields_url_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_url_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_url_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_url_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filename {
+  create: MediaDocAccessFields_filename_Create
+  read: MediaDocAccessFields_filename_Read
+  update: MediaDocAccessFields_filename_Update
+  delete: MediaDocAccessFields_filename_Delete
+}
+
+type MediaDocAccessFields_filename_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filename_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filename_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_mimeType {
+  create: MediaDocAccessFields_mimeType_Create
+  read: MediaDocAccessFields_mimeType_Read
+  update: MediaDocAccessFields_mimeType_Update
+  delete: MediaDocAccessFields_mimeType_Delete
+}
+
+type MediaDocAccessFields_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filesize {
+  create: MediaDocAccessFields_filesize_Create
+  read: MediaDocAccessFields_filesize_Read
+  update: MediaDocAccessFields_filesize_Update
+  delete: MediaDocAccessFields_filesize_Delete
+}
+
+type MediaDocAccessFields_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_width {
+  create: MediaDocAccessFields_width_Create
+  read: MediaDocAccessFields_width_Read
+  update: MediaDocAccessFields_width_Update
+  delete: MediaDocAccessFields_width_Delete
+}
+
+type MediaDocAccessFields_width_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_width_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_width_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_width_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_height {
+  create: MediaDocAccessFields_height_Create
+  read: MediaDocAccessFields_height_Read
+  update: MediaDocAccessFields_height_Update
+  delete: MediaDocAccessFields_height_Delete
+}
+
+type MediaDocAccessFields_height_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_height_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_height_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_height_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes {
+  create: MediaDocAccessFields_sizes_Create
+  read: MediaDocAccessFields_sizes_Read
+  update: MediaDocAccessFields_sizes_Update
+  delete: MediaDocAccessFields_sizes_Delete
+  fields: MediaDocAccessFields_sizes_Fields
+}
+
+type MediaDocAccessFields_sizes_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_Fields {
+  thumbnail: MediaDocAccessFields_sizes_thumbnail
+  card: MediaDocAccessFields_sizes_card
+  tablet: MediaDocAccessFields_sizes_tablet
+}
+
+type MediaDocAccessFields_sizes_thumbnail {
+  create: MediaDocAccessFields_sizes_thumbnail_Create
+  read: MediaDocAccessFields_sizes_thumbnail_Read
+  update: MediaDocAccessFields_sizes_thumbnail_Update
+  delete: MediaDocAccessFields_sizes_thumbnail_Delete
+  fields: MediaDocAccessFields_sizes_thumbnail_Fields
+}
+
+type MediaDocAccessFields_sizes_thumbnail_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_Fields {
+  url: MediaDocAccessFields_sizes_thumbnail_url
+  width: MediaDocAccessFields_sizes_thumbnail_width
+  height: MediaDocAccessFields_sizes_thumbnail_height
+  mimeType: MediaDocAccessFields_sizes_thumbnail_mimeType
+  filesize: MediaDocAccessFields_sizes_thumbnail_filesize
+  filename: MediaDocAccessFields_sizes_thumbnail_filename
+}
+
+type MediaDocAccessFields_sizes_thumbnail_url {
+  create: MediaDocAccessFields_sizes_thumbnail_url_Create
+  read: MediaDocAccessFields_sizes_thumbnail_url_Read
+  update: MediaDocAccessFields_sizes_thumbnail_url_Update
+  delete: MediaDocAccessFields_sizes_thumbnail_url_Delete
+}
+
+type MediaDocAccessFields_sizes_thumbnail_url_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_url_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_url_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_url_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_width {
+  create: MediaDocAccessFields_sizes_thumbnail_width_Create
+  read: MediaDocAccessFields_sizes_thumbnail_width_Read
+  update: MediaDocAccessFields_sizes_thumbnail_width_Update
+  delete: MediaDocAccessFields_sizes_thumbnail_width_Delete
+}
+
+type MediaDocAccessFields_sizes_thumbnail_width_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_width_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_width_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_width_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_height {
+  create: MediaDocAccessFields_sizes_thumbnail_height_Create
+  read: MediaDocAccessFields_sizes_thumbnail_height_Read
+  update: MediaDocAccessFields_sizes_thumbnail_height_Update
+  delete: MediaDocAccessFields_sizes_thumbnail_height_Delete
+}
+
+type MediaDocAccessFields_sizes_thumbnail_height_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_height_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_height_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_height_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_mimeType {
+  create: MediaDocAccessFields_sizes_thumbnail_mimeType_Create
+  read: MediaDocAccessFields_sizes_thumbnail_mimeType_Read
+  update: MediaDocAccessFields_sizes_thumbnail_mimeType_Update
+  delete: MediaDocAccessFields_sizes_thumbnail_mimeType_Delete
+}
+
+type MediaDocAccessFields_sizes_thumbnail_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_filesize {
+  create: MediaDocAccessFields_sizes_thumbnail_filesize_Create
+  read: MediaDocAccessFields_sizes_thumbnail_filesize_Read
+  update: MediaDocAccessFields_sizes_thumbnail_filesize_Update
+  delete: MediaDocAccessFields_sizes_thumbnail_filesize_Delete
+}
+
+type MediaDocAccessFields_sizes_thumbnail_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_filename {
+  create: MediaDocAccessFields_sizes_thumbnail_filename_Create
+  read: MediaDocAccessFields_sizes_thumbnail_filename_Read
+  update: MediaDocAccessFields_sizes_thumbnail_filename_Update
+  delete: MediaDocAccessFields_sizes_thumbnail_filename_Delete
+}
+
+type MediaDocAccessFields_sizes_thumbnail_filename_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_filename_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_filename_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_thumbnail_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card {
+  create: MediaDocAccessFields_sizes_card_Create
+  read: MediaDocAccessFields_sizes_card_Read
+  update: MediaDocAccessFields_sizes_card_Update
+  delete: MediaDocAccessFields_sizes_card_Delete
+  fields: MediaDocAccessFields_sizes_card_Fields
+}
+
+type MediaDocAccessFields_sizes_card_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_Fields {
+  url: MediaDocAccessFields_sizes_card_url
+  width: MediaDocAccessFields_sizes_card_width
+  height: MediaDocAccessFields_sizes_card_height
+  mimeType: MediaDocAccessFields_sizes_card_mimeType
+  filesize: MediaDocAccessFields_sizes_card_filesize
+  filename: MediaDocAccessFields_sizes_card_filename
+}
+
+type MediaDocAccessFields_sizes_card_url {
+  create: MediaDocAccessFields_sizes_card_url_Create
+  read: MediaDocAccessFields_sizes_card_url_Read
+  update: MediaDocAccessFields_sizes_card_url_Update
+  delete: MediaDocAccessFields_sizes_card_url_Delete
+}
+
+type MediaDocAccessFields_sizes_card_url_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_url_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_url_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_url_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_width {
+  create: MediaDocAccessFields_sizes_card_width_Create
+  read: MediaDocAccessFields_sizes_card_width_Read
+  update: MediaDocAccessFields_sizes_card_width_Update
+  delete: MediaDocAccessFields_sizes_card_width_Delete
+}
+
+type MediaDocAccessFields_sizes_card_width_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_width_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_width_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_width_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_height {
+  create: MediaDocAccessFields_sizes_card_height_Create
+  read: MediaDocAccessFields_sizes_card_height_Read
+  update: MediaDocAccessFields_sizes_card_height_Update
+  delete: MediaDocAccessFields_sizes_card_height_Delete
+}
+
+type MediaDocAccessFields_sizes_card_height_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_height_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_height_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_height_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_mimeType {
+  create: MediaDocAccessFields_sizes_card_mimeType_Create
+  read: MediaDocAccessFields_sizes_card_mimeType_Read
+  update: MediaDocAccessFields_sizes_card_mimeType_Update
+  delete: MediaDocAccessFields_sizes_card_mimeType_Delete
+}
+
+type MediaDocAccessFields_sizes_card_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_filesize {
+  create: MediaDocAccessFields_sizes_card_filesize_Create
+  read: MediaDocAccessFields_sizes_card_filesize_Read
+  update: MediaDocAccessFields_sizes_card_filesize_Update
+  delete: MediaDocAccessFields_sizes_card_filesize_Delete
+}
+
+type MediaDocAccessFields_sizes_card_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_filename {
+  create: MediaDocAccessFields_sizes_card_filename_Create
+  read: MediaDocAccessFields_sizes_card_filename_Read
+  update: MediaDocAccessFields_sizes_card_filename_Update
+  delete: MediaDocAccessFields_sizes_card_filename_Delete
+}
+
+type MediaDocAccessFields_sizes_card_filename_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_filename_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_filename_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_card_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet {
+  create: MediaDocAccessFields_sizes_tablet_Create
+  read: MediaDocAccessFields_sizes_tablet_Read
+  update: MediaDocAccessFields_sizes_tablet_Update
+  delete: MediaDocAccessFields_sizes_tablet_Delete
+  fields: MediaDocAccessFields_sizes_tablet_Fields
+}
+
+type MediaDocAccessFields_sizes_tablet_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_Fields {
+  url: MediaDocAccessFields_sizes_tablet_url
+  width: MediaDocAccessFields_sizes_tablet_width
+  height: MediaDocAccessFields_sizes_tablet_height
+  mimeType: MediaDocAccessFields_sizes_tablet_mimeType
+  filesize: MediaDocAccessFields_sizes_tablet_filesize
+  filename: MediaDocAccessFields_sizes_tablet_filename
+}
+
+type MediaDocAccessFields_sizes_tablet_url {
+  create: MediaDocAccessFields_sizes_tablet_url_Create
+  read: MediaDocAccessFields_sizes_tablet_url_Read
+  update: MediaDocAccessFields_sizes_tablet_url_Update
+  delete: MediaDocAccessFields_sizes_tablet_url_Delete
+}
+
+type MediaDocAccessFields_sizes_tablet_url_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_url_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_url_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_url_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_width {
+  create: MediaDocAccessFields_sizes_tablet_width_Create
+  read: MediaDocAccessFields_sizes_tablet_width_Read
+  update: MediaDocAccessFields_sizes_tablet_width_Update
+  delete: MediaDocAccessFields_sizes_tablet_width_Delete
+}
+
+type MediaDocAccessFields_sizes_tablet_width_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_width_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_width_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_width_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_height {
+  create: MediaDocAccessFields_sizes_tablet_height_Create
+  read: MediaDocAccessFields_sizes_tablet_height_Read
+  update: MediaDocAccessFields_sizes_tablet_height_Update
+  delete: MediaDocAccessFields_sizes_tablet_height_Delete
+}
+
+type MediaDocAccessFields_sizes_tablet_height_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_height_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_height_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_height_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_mimeType {
+  create: MediaDocAccessFields_sizes_tablet_mimeType_Create
+  read: MediaDocAccessFields_sizes_tablet_mimeType_Read
+  update: MediaDocAccessFields_sizes_tablet_mimeType_Update
+  delete: MediaDocAccessFields_sizes_tablet_mimeType_Delete
+}
+
+type MediaDocAccessFields_sizes_tablet_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_filesize {
+  create: MediaDocAccessFields_sizes_tablet_filesize_Create
+  read: MediaDocAccessFields_sizes_tablet_filesize_Read
+  update: MediaDocAccessFields_sizes_tablet_filesize_Update
+  delete: MediaDocAccessFields_sizes_tablet_filesize_Delete
+}
+
+type MediaDocAccessFields_sizes_tablet_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_filename {
+  create: MediaDocAccessFields_sizes_tablet_filename_Create
+  read: MediaDocAccessFields_sizes_tablet_filename_Read
+  update: MediaDocAccessFields_sizes_tablet_filename_Update
+  delete: MediaDocAccessFields_sizes_tablet_filename_Delete
+}
+
+type MediaDocAccessFields_sizes_tablet_filename_Create {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_filename_Read {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_filename_Update {
+  permission: Boolean!
+}
+
+type MediaDocAccessFields_sizes_tablet_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Audio {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+}
+
+type allAudio {
+  docs: [Audio]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input Audio_where {
+  url: Audio_url_operator
+  filename: Audio_filename_operator
+  mimeType: Audio_mimeType_operator
+  filesize: Audio_filesize_operator
+  width: Audio_width_operator
+  height: Audio_height_operator
+  id: Audio_id_operator
+  createdAt: Audio_createdAt_operator
+  updatedAt: Audio_updatedAt_operator
+  OR: [Audio_where_or]
+  AND: [Audio_where_and]
+}
+
+input Audio_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Audio_filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Audio_mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Audio_filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Audio_width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Audio_height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Audio_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Audio_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Audio_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Audio_where_or {
+  url: Audio_url_operator
+  filename: Audio_filename_operator
+  mimeType: Audio_mimeType_operator
+  filesize: Audio_filesize_operator
+  width: Audio_width_operator
+  height: Audio_height_operator
+  id: Audio_id_operator
+  createdAt: Audio_createdAt_operator
+  updatedAt: Audio_updatedAt_operator
+}
+
+input Audio_where_and {
+  url: Audio_url_operator
+  filename: Audio_filename_operator
+  mimeType: Audio_mimeType_operator
+  filesize: Audio_filesize_operator
+  width: Audio_width_operator
+  height: Audio_height_operator
+  id: Audio_id_operator
+  createdAt: Audio_createdAt_operator
+  updatedAt: Audio_updatedAt_operator
+}
+
+type audioDocAccess {
+  fields: AudioDocAccessFields
+  create: AudioCreateDocAccess
+  read: AudioReadDocAccess
+  update: AudioUpdateDocAccess
+  delete: AudioDeleteDocAccess
+}
+
+type AudioDocAccessFields {
+  url: AudioDocAccessFields_url
+  filename: AudioDocAccessFields_filename
+  mimeType: AudioDocAccessFields_mimeType
+  filesize: AudioDocAccessFields_filesize
+  width: AudioDocAccessFields_width
+  height: AudioDocAccessFields_height
+}
+
+type AudioDocAccessFields_url {
+  create: AudioDocAccessFields_url_Create
+  read: AudioDocAccessFields_url_Read
+  update: AudioDocAccessFields_url_Update
+  delete: AudioDocAccessFields_url_Delete
+}
+
+type AudioDocAccessFields_url_Create {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_url_Read {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_url_Update {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_url_Delete {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_filename {
+  create: AudioDocAccessFields_filename_Create
+  read: AudioDocAccessFields_filename_Read
+  update: AudioDocAccessFields_filename_Update
+  delete: AudioDocAccessFields_filename_Delete
+}
+
+type AudioDocAccessFields_filename_Create {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_filename_Read {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_filename_Update {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_filename_Delete {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_mimeType {
+  create: AudioDocAccessFields_mimeType_Create
+  read: AudioDocAccessFields_mimeType_Read
+  update: AudioDocAccessFields_mimeType_Update
+  delete: AudioDocAccessFields_mimeType_Delete
+}
+
+type AudioDocAccessFields_mimeType_Create {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_mimeType_Read {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_mimeType_Update {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_mimeType_Delete {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_filesize {
+  create: AudioDocAccessFields_filesize_Create
+  read: AudioDocAccessFields_filesize_Read
+  update: AudioDocAccessFields_filesize_Update
+  delete: AudioDocAccessFields_filesize_Delete
+}
+
+type AudioDocAccessFields_filesize_Create {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_filesize_Read {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_filesize_Update {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_filesize_Delete {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_width {
+  create: AudioDocAccessFields_width_Create
+  read: AudioDocAccessFields_width_Read
+  update: AudioDocAccessFields_width_Update
+  delete: AudioDocAccessFields_width_Delete
+}
+
+type AudioDocAccessFields_width_Create {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_width_Read {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_width_Update {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_width_Delete {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_height {
+  create: AudioDocAccessFields_height_Create
+  read: AudioDocAccessFields_height_Read
+  update: AudioDocAccessFields_height_Update
+  delete: AudioDocAccessFields_height_Delete
+}
+
+type AudioDocAccessFields_height_Create {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_height_Read {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_height_Update {
+  permission: Boolean!
+}
+
+type AudioDocAccessFields_height_Delete {
+  permission: Boolean!
+}
+
+type AudioCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AudioReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AudioUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AudioDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaCategoria {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  categoriaNombre: String
+}
+
+type RevistaCategorias {
+  docs: [RevistaCategoria]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input RevistaCategoria_where {
+  categoriaNombre: RevistaCategoria_categoriaNombre_operator
+  id: RevistaCategoria_id_operator
+  createdAt: RevistaCategoria_createdAt_operator
+  updatedAt: RevistaCategoria_updatedAt_operator
+  OR: [RevistaCategoria_where_or]
+  AND: [RevistaCategoria_where_and]
+}
+
+input RevistaCategoria_categoriaNombre_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaCategoria_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input RevistaCategoria_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input RevistaCategoria_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input RevistaCategoria_where_or {
+  categoriaNombre: RevistaCategoria_categoriaNombre_operator
+  id: RevistaCategoria_id_operator
+  createdAt: RevistaCategoria_createdAt_operator
+  updatedAt: RevistaCategoria_updatedAt_operator
+}
+
+input RevistaCategoria_where_and {
+  categoriaNombre: RevistaCategoria_categoriaNombre_operator
+  id: RevistaCategoria_id_operator
+  createdAt: RevistaCategoria_createdAt_operator
+  updatedAt: RevistaCategoria_updatedAt_operator
+}
+
+type revista_categoriaDocAccess {
+  fields: RevistaCategoriaDocAccessFields
+  create: RevistaCategoriaCreateDocAccess
+  read: RevistaCategoriaReadDocAccess
+  update: RevistaCategoriaUpdateDocAccess
+  delete: RevistaCategoriaDeleteDocAccess
+}
+
+type RevistaCategoriaDocAccessFields {
+  categoriaNombre: RevistaCategoriaDocAccessFields_categoriaNombre
+}
+
+type RevistaCategoriaDocAccessFields_categoriaNombre {
+  create: RevistaCategoriaDocAccessFields_categoriaNombre_Create
+  read: RevistaCategoriaDocAccessFields_categoriaNombre_Read
+  update: RevistaCategoriaDocAccessFields_categoriaNombre_Update
+  delete: RevistaCategoriaDocAccessFields_categoriaNombre_Delete
+}
+
+type RevistaCategoriaDocAccessFields_categoriaNombre_Create {
+  permission: Boolean!
+}
+
+type RevistaCategoriaDocAccessFields_categoriaNombre_Read {
+  permission: Boolean!
+}
+
+type RevistaCategoriaDocAccessFields_categoriaNombre_Update {
+  permission: Boolean!
+}
+
+type RevistaCategoriaDocAccessFields_categoriaNombre_Delete {
+  permission: Boolean!
+}
+
+type RevistaCategoriaCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaCategoriaReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaCategoriaUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaCategoriaDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaContent {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  articulo: String!
+  position: Float!
+  imagen: Boolean
+  magazineImage(where: RevistaContent_MagazineImage_where): Media
+  audio: Boolean
+  audioFile(where: RevistaContent_AudioFile_where): Audio
+  video: Boolean
+  urlVideo: String
+  categoriaPrueba: RevistaCategoria!
+}
+
+input RevistaContent_MagazineImage_where {
+  url: RevistaContent_MagazineImage_url_operator
+  filename: RevistaContent_MagazineImage_filename_operator
+  mimeType: RevistaContent_MagazineImage_mimeType_operator
+  filesize: RevistaContent_MagazineImage_filesize_operator
+  width: RevistaContent_MagazineImage_width_operator
+  height: RevistaContent_MagazineImage_height_operator
+  sizes__thumbnail__url: RevistaContent_MagazineImage_sizes__thumbnail__url_operator
+  sizes__thumbnail__width: RevistaContent_MagazineImage_sizes__thumbnail__width_operator
+  sizes__thumbnail__height: RevistaContent_MagazineImage_sizes__thumbnail__height_operator
+  sizes__thumbnail__mimeType: RevistaContent_MagazineImage_sizes__thumbnail__mimeType_operator
+  sizes__thumbnail__filesize: RevistaContent_MagazineImage_sizes__thumbnail__filesize_operator
+  sizes__thumbnail__filename: RevistaContent_MagazineImage_sizes__thumbnail__filename_operator
+  sizes__card__url: RevistaContent_MagazineImage_sizes__card__url_operator
+  sizes__card__width: RevistaContent_MagazineImage_sizes__card__width_operator
+  sizes__card__height: RevistaContent_MagazineImage_sizes__card__height_operator
+  sizes__card__mimeType: RevistaContent_MagazineImage_sizes__card__mimeType_operator
+  sizes__card__filesize: RevistaContent_MagazineImage_sizes__card__filesize_operator
+  sizes__card__filename: RevistaContent_MagazineImage_sizes__card__filename_operator
+  sizes__tablet__url: RevistaContent_MagazineImage_sizes__tablet__url_operator
+  sizes__tablet__width: RevistaContent_MagazineImage_sizes__tablet__width_operator
+  sizes__tablet__height: RevistaContent_MagazineImage_sizes__tablet__height_operator
+  sizes__tablet__mimeType: RevistaContent_MagazineImage_sizes__tablet__mimeType_operator
+  sizes__tablet__filesize: RevistaContent_MagazineImage_sizes__tablet__filesize_operator
+  sizes__tablet__filename: RevistaContent_MagazineImage_sizes__tablet__filename_operator
+  id: RevistaContent_MagazineImage_id_operator
+  OR: [RevistaContent_MagazineImage_where_or]
+  AND: [RevistaContent_MagazineImage_where_and]
+}
+
+input RevistaContent_MagazineImage_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__thumbnail__url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__thumbnail__width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__thumbnail__height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__thumbnail__mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__thumbnail__filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__thumbnail__filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__card__url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__card__width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__card__height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__card__mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__card__filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__card__filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__tablet__url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__tablet__width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__tablet__height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__tablet__mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__tablet__filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_sizes__tablet__filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input RevistaContent_MagazineImage_where_or {
+  url: RevistaContent_MagazineImage_url_operator
+  filename: RevistaContent_MagazineImage_filename_operator
+  mimeType: RevistaContent_MagazineImage_mimeType_operator
+  filesize: RevistaContent_MagazineImage_filesize_operator
+  width: RevistaContent_MagazineImage_width_operator
+  height: RevistaContent_MagazineImage_height_operator
+  sizes__thumbnail__url: RevistaContent_MagazineImage_sizes__thumbnail__url_operator
+  sizes__thumbnail__width: RevistaContent_MagazineImage_sizes__thumbnail__width_operator
+  sizes__thumbnail__height: RevistaContent_MagazineImage_sizes__thumbnail__height_operator
+  sizes__thumbnail__mimeType: RevistaContent_MagazineImage_sizes__thumbnail__mimeType_operator
+  sizes__thumbnail__filesize: RevistaContent_MagazineImage_sizes__thumbnail__filesize_operator
+  sizes__thumbnail__filename: RevistaContent_MagazineImage_sizes__thumbnail__filename_operator
+  sizes__card__url: RevistaContent_MagazineImage_sizes__card__url_operator
+  sizes__card__width: RevistaContent_MagazineImage_sizes__card__width_operator
+  sizes__card__height: RevistaContent_MagazineImage_sizes__card__height_operator
+  sizes__card__mimeType: RevistaContent_MagazineImage_sizes__card__mimeType_operator
+  sizes__card__filesize: RevistaContent_MagazineImage_sizes__card__filesize_operator
+  sizes__card__filename: RevistaContent_MagazineImage_sizes__card__filename_operator
+  sizes__tablet__url: RevistaContent_MagazineImage_sizes__tablet__url_operator
+  sizes__tablet__width: RevistaContent_MagazineImage_sizes__tablet__width_operator
+  sizes__tablet__height: RevistaContent_MagazineImage_sizes__tablet__height_operator
+  sizes__tablet__mimeType: RevistaContent_MagazineImage_sizes__tablet__mimeType_operator
+  sizes__tablet__filesize: RevistaContent_MagazineImage_sizes__tablet__filesize_operator
+  sizes__tablet__filename: RevistaContent_MagazineImage_sizes__tablet__filename_operator
+  id: RevistaContent_MagazineImage_id_operator
+}
+
+input RevistaContent_MagazineImage_where_and {
+  url: RevistaContent_MagazineImage_url_operator
+  filename: RevistaContent_MagazineImage_filename_operator
+  mimeType: RevistaContent_MagazineImage_mimeType_operator
+  filesize: RevistaContent_MagazineImage_filesize_operator
+  width: RevistaContent_MagazineImage_width_operator
+  height: RevistaContent_MagazineImage_height_operator
+  sizes__thumbnail__url: RevistaContent_MagazineImage_sizes__thumbnail__url_operator
+  sizes__thumbnail__width: RevistaContent_MagazineImage_sizes__thumbnail__width_operator
+  sizes__thumbnail__height: RevistaContent_MagazineImage_sizes__thumbnail__height_operator
+  sizes__thumbnail__mimeType: RevistaContent_MagazineImage_sizes__thumbnail__mimeType_operator
+  sizes__thumbnail__filesize: RevistaContent_MagazineImage_sizes__thumbnail__filesize_operator
+  sizes__thumbnail__filename: RevistaContent_MagazineImage_sizes__thumbnail__filename_operator
+  sizes__card__url: RevistaContent_MagazineImage_sizes__card__url_operator
+  sizes__card__width: RevistaContent_MagazineImage_sizes__card__width_operator
+  sizes__card__height: RevistaContent_MagazineImage_sizes__card__height_operator
+  sizes__card__mimeType: RevistaContent_MagazineImage_sizes__card__mimeType_operator
+  sizes__card__filesize: RevistaContent_MagazineImage_sizes__card__filesize_operator
+  sizes__card__filename: RevistaContent_MagazineImage_sizes__card__filename_operator
+  sizes__tablet__url: RevistaContent_MagazineImage_sizes__tablet__url_operator
+  sizes__tablet__width: RevistaContent_MagazineImage_sizes__tablet__width_operator
+  sizes__tablet__height: RevistaContent_MagazineImage_sizes__tablet__height_operator
+  sizes__tablet__mimeType: RevistaContent_MagazineImage_sizes__tablet__mimeType_operator
+  sizes__tablet__filesize: RevistaContent_MagazineImage_sizes__tablet__filesize_operator
+  sizes__tablet__filename: RevistaContent_MagazineImage_sizes__tablet__filename_operator
+  id: RevistaContent_MagazineImage_id_operator
+}
+
+input RevistaContent_AudioFile_where {
+  url: RevistaContent_AudioFile_url_operator
+  filename: RevistaContent_AudioFile_filename_operator
+  mimeType: RevistaContent_AudioFile_mimeType_operator
+  filesize: RevistaContent_AudioFile_filesize_operator
+  width: RevistaContent_AudioFile_width_operator
+  height: RevistaContent_AudioFile_height_operator
+  id: RevistaContent_AudioFile_id_operator
+  OR: [RevistaContent_AudioFile_where_or]
+  AND: [RevistaContent_AudioFile_where_and]
+}
+
+input RevistaContent_AudioFile_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_AudioFile_filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_AudioFile_mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_AudioFile_filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_AudioFile_width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_AudioFile_height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input RevistaContent_AudioFile_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input RevistaContent_AudioFile_where_or {
+  url: RevistaContent_AudioFile_url_operator
+  filename: RevistaContent_AudioFile_filename_operator
+  mimeType: RevistaContent_AudioFile_mimeType_operator
+  filesize: RevistaContent_AudioFile_filesize_operator
+  width: RevistaContent_AudioFile_width_operator
+  height: RevistaContent_AudioFile_height_operator
+  id: RevistaContent_AudioFile_id_operator
+}
+
+input RevistaContent_AudioFile_where_and {
+  url: RevistaContent_AudioFile_url_operator
+  filename: RevistaContent_AudioFile_filename_operator
+  mimeType: RevistaContent_AudioFile_mimeType_operator
+  filesize: RevistaContent_AudioFile_filesize_operator
+  width: RevistaContent_AudioFile_width_operator
+  height: RevistaContent_AudioFile_height_operator
+  id: RevistaContent_AudioFile_id_operator
+}
+
+type RevistaContents {
+  docs: [RevistaContent]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input RevistaContent_where {
+  articulo: RevistaContent_articulo_operator
+  position: RevistaContent_position_operator
+  imagen: RevistaContent_imagen_operator
+  magazineImage: RevistaContent_magazineImage_operator
+  audio: RevistaContent_audio_operator
+  audioFile: RevistaContent_audioFile_operator
+  video: RevistaContent_video_operator
+  urlVideo: RevistaContent_urlVideo_operator
+  categoriaPrueba: RevistaContent_categoriaPrueba_operator
+  id: RevistaContent_id_operator
+  createdAt: RevistaContent_createdAt_operator
+  updatedAt: RevistaContent_updatedAt_operator
+  OR: [RevistaContent_where_or]
+  AND: [RevistaContent_where_and]
+}
+
+input RevistaContent_articulo_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input RevistaContent_position_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input RevistaContent_imagen_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input RevistaContent_magazineImage_operator {
+  equals: String
+  not_equals: String
+  exists: Boolean
+}
+
+input RevistaContent_audio_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input RevistaContent_audioFile_operator {
+  equals: String
+  not_equals: String
+  exists: Boolean
+}
+
+input RevistaContent_video_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input RevistaContent_urlVideo_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input RevistaContent_categoriaPrueba_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input RevistaContent_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input RevistaContent_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input RevistaContent_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input RevistaContent_where_or {
+  articulo: RevistaContent_articulo_operator
+  position: RevistaContent_position_operator
+  imagen: RevistaContent_imagen_operator
+  magazineImage: RevistaContent_magazineImage_operator
+  audio: RevistaContent_audio_operator
+  audioFile: RevistaContent_audioFile_operator
+  video: RevistaContent_video_operator
+  urlVideo: RevistaContent_urlVideo_operator
+  categoriaPrueba: RevistaContent_categoriaPrueba_operator
+  id: RevistaContent_id_operator
+  createdAt: RevistaContent_createdAt_operator
+  updatedAt: RevistaContent_updatedAt_operator
+}
+
+input RevistaContent_where_and {
+  articulo: RevistaContent_articulo_operator
+  position: RevistaContent_position_operator
+  imagen: RevistaContent_imagen_operator
+  magazineImage: RevistaContent_magazineImage_operator
+  audio: RevistaContent_audio_operator
+  audioFile: RevistaContent_audioFile_operator
+  video: RevistaContent_video_operator
+  urlVideo: RevistaContent_urlVideo_operator
+  categoriaPrueba: RevistaContent_categoriaPrueba_operator
+  id: RevistaContent_id_operator
+  createdAt: RevistaContent_createdAt_operator
+  updatedAt: RevistaContent_updatedAt_operator
+}
+
+type revista_contentDocAccess {
+  fields: RevistaContentDocAccessFields
+  create: RevistaContentCreateDocAccess
+  read: RevistaContentReadDocAccess
+  update: RevistaContentUpdateDocAccess
+  delete: RevistaContentDeleteDocAccess
+}
+
+type RevistaContentDocAccessFields {
+  articulo: RevistaContentDocAccessFields_articulo
+  position: RevistaContentDocAccessFields_position
+  imagen: RevistaContentDocAccessFields_imagen
+  magazineImage: RevistaContentDocAccessFields_magazineImage
+  audio: RevistaContentDocAccessFields_audio
+  audioFile: RevistaContentDocAccessFields_audioFile
+  video: RevistaContentDocAccessFields_video
+  urlVideo: RevistaContentDocAccessFields_urlVideo
+  categoriaPrueba: RevistaContentDocAccessFields_categoriaPrueba
+}
+
+type RevistaContentDocAccessFields_articulo {
+  create: RevistaContentDocAccessFields_articulo_Create
+  read: RevistaContentDocAccessFields_articulo_Read
+  update: RevistaContentDocAccessFields_articulo_Update
+  delete: RevistaContentDocAccessFields_articulo_Delete
+}
+
+type RevistaContentDocAccessFields_articulo_Create {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_articulo_Read {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_articulo_Update {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_articulo_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_position {
+  create: RevistaContentDocAccessFields_position_Create
+  read: RevistaContentDocAccessFields_position_Read
+  update: RevistaContentDocAccessFields_position_Update
+  delete: RevistaContentDocAccessFields_position_Delete
+}
+
+type RevistaContentDocAccessFields_position_Create {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_position_Read {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_position_Update {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_position_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_imagen {
+  create: RevistaContentDocAccessFields_imagen_Create
+  read: RevistaContentDocAccessFields_imagen_Read
+  update: RevistaContentDocAccessFields_imagen_Update
+  delete: RevistaContentDocAccessFields_imagen_Delete
+}
+
+type RevistaContentDocAccessFields_imagen_Create {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_imagen_Read {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_imagen_Update {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_imagen_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_magazineImage {
+  create: RevistaContentDocAccessFields_magazineImage_Create
+  read: RevistaContentDocAccessFields_magazineImage_Read
+  update: RevistaContentDocAccessFields_magazineImage_Update
+  delete: RevistaContentDocAccessFields_magazineImage_Delete
+}
+
+type RevistaContentDocAccessFields_magazineImage_Create {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_magazineImage_Read {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_magazineImage_Update {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_magazineImage_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_audio {
+  create: RevistaContentDocAccessFields_audio_Create
+  read: RevistaContentDocAccessFields_audio_Read
+  update: RevistaContentDocAccessFields_audio_Update
+  delete: RevistaContentDocAccessFields_audio_Delete
+}
+
+type RevistaContentDocAccessFields_audio_Create {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_audio_Read {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_audio_Update {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_audio_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_audioFile {
+  create: RevistaContentDocAccessFields_audioFile_Create
+  read: RevistaContentDocAccessFields_audioFile_Read
+  update: RevistaContentDocAccessFields_audioFile_Update
+  delete: RevistaContentDocAccessFields_audioFile_Delete
+}
+
+type RevistaContentDocAccessFields_audioFile_Create {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_audioFile_Read {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_audioFile_Update {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_audioFile_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_video {
+  create: RevistaContentDocAccessFields_video_Create
+  read: RevistaContentDocAccessFields_video_Read
+  update: RevistaContentDocAccessFields_video_Update
+  delete: RevistaContentDocAccessFields_video_Delete
+}
+
+type RevistaContentDocAccessFields_video_Create {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_video_Read {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_video_Update {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_video_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_urlVideo {
+  create: RevistaContentDocAccessFields_urlVideo_Create
+  read: RevistaContentDocAccessFields_urlVideo_Read
+  update: RevistaContentDocAccessFields_urlVideo_Update
+  delete: RevistaContentDocAccessFields_urlVideo_Delete
+}
+
+type RevistaContentDocAccessFields_urlVideo_Create {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_urlVideo_Read {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_urlVideo_Update {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_urlVideo_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_categoriaPrueba {
+  create: RevistaContentDocAccessFields_categoriaPrueba_Create
+  read: RevistaContentDocAccessFields_categoriaPrueba_Read
+  update: RevistaContentDocAccessFields_categoriaPrueba_Update
+  delete: RevistaContentDocAccessFields_categoriaPrueba_Delete
+}
+
+type RevistaContentDocAccessFields_categoriaPrueba_Create {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_categoriaPrueba_Read {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_categoriaPrueba_Update {
+  permission: Boolean!
+}
+
+type RevistaContentDocAccessFields_categoriaPrueba_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaContentReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaContentUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaContentDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Preference {
+  key: String!
+  value: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Access {
+  canAccessAdmin: Boolean!
+  Usuarios: UsuariosAccess
+  media: mediaAccess
+  audio: audioAccess
+  revista_categoria: revista_categoriaAccess
+  revista_content: revista_contentAccess
+}
+
+type UsuariosAccess {
+  fields: UsuariosFields
+  create: UsuariosCreateAccess
+  read: UsuariosReadAccess
+  update: UsuariosUpdateAccess
+  delete: UsuariosDeleteAccess
+  unlock: UsuariosUnlockAccess
+}
+
+type UsuariosFields {
+  role: UsuariosFields_role
+  enableAPIKey: UsuariosFields_enableAPIKey
+  apiKey: UsuariosFields_apiKey
+  email: UsuariosFields_email
+  password: UsuariosFields_password
+}
+
+type UsuariosFields_role {
+  create: UsuariosFields_role_Create
+  read: UsuariosFields_role_Read
+  update: UsuariosFields_role_Update
+  delete: UsuariosFields_role_Delete
+}
+
+type UsuariosFields_role_Create {
+  permission: Boolean!
+}
+
+type UsuariosFields_role_Read {
+  permission: Boolean!
+}
+
+type UsuariosFields_role_Update {
+  permission: Boolean!
+}
+
+type UsuariosFields_role_Delete {
+  permission: Boolean!
+}
+
+type UsuariosFields_enableAPIKey {
+  create: UsuariosFields_enableAPIKey_Create
+  read: UsuariosFields_enableAPIKey_Read
+  update: UsuariosFields_enableAPIKey_Update
+  delete: UsuariosFields_enableAPIKey_Delete
+}
+
+type UsuariosFields_enableAPIKey_Create {
+  permission: Boolean!
+}
+
+type UsuariosFields_enableAPIKey_Read {
+  permission: Boolean!
+}
+
+type UsuariosFields_enableAPIKey_Update {
+  permission: Boolean!
+}
+
+type UsuariosFields_enableAPIKey_Delete {
+  permission: Boolean!
+}
+
+type UsuariosFields_apiKey {
+  create: UsuariosFields_apiKey_Create
+  read: UsuariosFields_apiKey_Read
+  update: UsuariosFields_apiKey_Update
+  delete: UsuariosFields_apiKey_Delete
+}
+
+type UsuariosFields_apiKey_Create {
+  permission: Boolean!
+}
+
+type UsuariosFields_apiKey_Read {
+  permission: Boolean!
+}
+
+type UsuariosFields_apiKey_Update {
+  permission: Boolean!
+}
+
+type UsuariosFields_apiKey_Delete {
+  permission: Boolean!
+}
+
+type UsuariosFields_email {
+  create: UsuariosFields_email_Create
+  read: UsuariosFields_email_Read
+  update: UsuariosFields_email_Update
+  delete: UsuariosFields_email_Delete
+}
+
+type UsuariosFields_email_Create {
+  permission: Boolean!
+}
+
+type UsuariosFields_email_Read {
+  permission: Boolean!
+}
+
+type UsuariosFields_email_Update {
+  permission: Boolean!
+}
+
+type UsuariosFields_email_Delete {
+  permission: Boolean!
+}
+
+type UsuariosFields_password {
+  create: UsuariosFields_password_Create
+  read: UsuariosFields_password_Read
+  update: UsuariosFields_password_Update
+  delete: UsuariosFields_password_Delete
+}
+
+type UsuariosFields_password_Create {
+  permission: Boolean!
+}
+
+type UsuariosFields_password_Read {
+  permission: Boolean!
+}
+
+type UsuariosFields_password_Update {
+  permission: Boolean!
+}
+
+type UsuariosFields_password_Delete {
+  permission: Boolean!
+}
+
+type UsuariosCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsuariosReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsuariosUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsuariosDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsuariosUnlockAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type mediaAccess {
+  fields: MediaFields
+  create: MediaCreateAccess
+  read: MediaReadAccess
+  update: MediaUpdateAccess
+  delete: MediaDeleteAccess
+}
+
+type MediaFields {
+  url: MediaFields_url
+  filename: MediaFields_filename
+  mimeType: MediaFields_mimeType
+  filesize: MediaFields_filesize
+  width: MediaFields_width
+  height: MediaFields_height
+  sizes: MediaFields_sizes
+}
+
+type MediaFields_url {
+  create: MediaFields_url_Create
+  read: MediaFields_url_Read
+  update: MediaFields_url_Update
+  delete: MediaFields_url_Delete
+}
+
+type MediaFields_url_Create {
+  permission: Boolean!
+}
+
+type MediaFields_url_Read {
+  permission: Boolean!
+}
+
+type MediaFields_url_Update {
+  permission: Boolean!
+}
+
+type MediaFields_url_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_filename {
+  create: MediaFields_filename_Create
+  read: MediaFields_filename_Read
+  update: MediaFields_filename_Update
+  delete: MediaFields_filename_Delete
+}
+
+type MediaFields_filename_Create {
+  permission: Boolean!
+}
+
+type MediaFields_filename_Read {
+  permission: Boolean!
+}
+
+type MediaFields_filename_Update {
+  permission: Boolean!
+}
+
+type MediaFields_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType {
+  create: MediaFields_mimeType_Create
+  read: MediaFields_mimeType_Read
+  update: MediaFields_mimeType_Update
+  delete: MediaFields_mimeType_Delete
+}
+
+type MediaFields_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_filesize {
+  create: MediaFields_filesize_Create
+  read: MediaFields_filesize_Read
+  update: MediaFields_filesize_Update
+  delete: MediaFields_filesize_Delete
+}
+
+type MediaFields_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaFields_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaFields_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaFields_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_width {
+  create: MediaFields_width_Create
+  read: MediaFields_width_Read
+  update: MediaFields_width_Update
+  delete: MediaFields_width_Delete
+}
+
+type MediaFields_width_Create {
+  permission: Boolean!
+}
+
+type MediaFields_width_Read {
+  permission: Boolean!
+}
+
+type MediaFields_width_Update {
+  permission: Boolean!
+}
+
+type MediaFields_width_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_height {
+  create: MediaFields_height_Create
+  read: MediaFields_height_Read
+  update: MediaFields_height_Update
+  delete: MediaFields_height_Delete
+}
+
+type MediaFields_height_Create {
+  permission: Boolean!
+}
+
+type MediaFields_height_Read {
+  permission: Boolean!
+}
+
+type MediaFields_height_Update {
+  permission: Boolean!
+}
+
+type MediaFields_height_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes {
+  create: MediaFields_sizes_Create
+  read: MediaFields_sizes_Read
+  update: MediaFields_sizes_Update
+  delete: MediaFields_sizes_Delete
+  fields: MediaFields_sizes_Fields
+}
+
+type MediaFields_sizes_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_Fields {
+  thumbnail: MediaFields_sizes_thumbnail
+  card: MediaFields_sizes_card
+  tablet: MediaFields_sizes_tablet
+}
+
+type MediaFields_sizes_thumbnail {
+  create: MediaFields_sizes_thumbnail_Create
+  read: MediaFields_sizes_thumbnail_Read
+  update: MediaFields_sizes_thumbnail_Update
+  delete: MediaFields_sizes_thumbnail_Delete
+  fields: MediaFields_sizes_thumbnail_Fields
+}
+
+type MediaFields_sizes_thumbnail_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_Fields {
+  url: MediaFields_sizes_thumbnail_url
+  width: MediaFields_sizes_thumbnail_width
+  height: MediaFields_sizes_thumbnail_height
+  mimeType: MediaFields_sizes_thumbnail_mimeType
+  filesize: MediaFields_sizes_thumbnail_filesize
+  filename: MediaFields_sizes_thumbnail_filename
+}
+
+type MediaFields_sizes_thumbnail_url {
+  create: MediaFields_sizes_thumbnail_url_Create
+  read: MediaFields_sizes_thumbnail_url_Read
+  update: MediaFields_sizes_thumbnail_url_Update
+  delete: MediaFields_sizes_thumbnail_url_Delete
+}
+
+type MediaFields_sizes_thumbnail_url_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_url_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_url_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_url_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_width {
+  create: MediaFields_sizes_thumbnail_width_Create
+  read: MediaFields_sizes_thumbnail_width_Read
+  update: MediaFields_sizes_thumbnail_width_Update
+  delete: MediaFields_sizes_thumbnail_width_Delete
+}
+
+type MediaFields_sizes_thumbnail_width_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_width_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_width_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_width_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_height {
+  create: MediaFields_sizes_thumbnail_height_Create
+  read: MediaFields_sizes_thumbnail_height_Read
+  update: MediaFields_sizes_thumbnail_height_Update
+  delete: MediaFields_sizes_thumbnail_height_Delete
+}
+
+type MediaFields_sizes_thumbnail_height_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_height_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_height_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_height_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_mimeType {
+  create: MediaFields_sizes_thumbnail_mimeType_Create
+  read: MediaFields_sizes_thumbnail_mimeType_Read
+  update: MediaFields_sizes_thumbnail_mimeType_Update
+  delete: MediaFields_sizes_thumbnail_mimeType_Delete
+}
+
+type MediaFields_sizes_thumbnail_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_filesize {
+  create: MediaFields_sizes_thumbnail_filesize_Create
+  read: MediaFields_sizes_thumbnail_filesize_Read
+  update: MediaFields_sizes_thumbnail_filesize_Update
+  delete: MediaFields_sizes_thumbnail_filesize_Delete
+}
+
+type MediaFields_sizes_thumbnail_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_filename {
+  create: MediaFields_sizes_thumbnail_filename_Create
+  read: MediaFields_sizes_thumbnail_filename_Read
+  update: MediaFields_sizes_thumbnail_filename_Update
+  delete: MediaFields_sizes_thumbnail_filename_Delete
+}
+
+type MediaFields_sizes_thumbnail_filename_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_filename_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_filename_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_thumbnail_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card {
+  create: MediaFields_sizes_card_Create
+  read: MediaFields_sizes_card_Read
+  update: MediaFields_sizes_card_Update
+  delete: MediaFields_sizes_card_Delete
+  fields: MediaFields_sizes_card_Fields
+}
+
+type MediaFields_sizes_card_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_Fields {
+  url: MediaFields_sizes_card_url
+  width: MediaFields_sizes_card_width
+  height: MediaFields_sizes_card_height
+  mimeType: MediaFields_sizes_card_mimeType
+  filesize: MediaFields_sizes_card_filesize
+  filename: MediaFields_sizes_card_filename
+}
+
+type MediaFields_sizes_card_url {
+  create: MediaFields_sizes_card_url_Create
+  read: MediaFields_sizes_card_url_Read
+  update: MediaFields_sizes_card_url_Update
+  delete: MediaFields_sizes_card_url_Delete
+}
+
+type MediaFields_sizes_card_url_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_url_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_url_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_url_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_width {
+  create: MediaFields_sizes_card_width_Create
+  read: MediaFields_sizes_card_width_Read
+  update: MediaFields_sizes_card_width_Update
+  delete: MediaFields_sizes_card_width_Delete
+}
+
+type MediaFields_sizes_card_width_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_width_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_width_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_width_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_height {
+  create: MediaFields_sizes_card_height_Create
+  read: MediaFields_sizes_card_height_Read
+  update: MediaFields_sizes_card_height_Update
+  delete: MediaFields_sizes_card_height_Delete
+}
+
+type MediaFields_sizes_card_height_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_height_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_height_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_height_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_mimeType {
+  create: MediaFields_sizes_card_mimeType_Create
+  read: MediaFields_sizes_card_mimeType_Read
+  update: MediaFields_sizes_card_mimeType_Update
+  delete: MediaFields_sizes_card_mimeType_Delete
+}
+
+type MediaFields_sizes_card_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_filesize {
+  create: MediaFields_sizes_card_filesize_Create
+  read: MediaFields_sizes_card_filesize_Read
+  update: MediaFields_sizes_card_filesize_Update
+  delete: MediaFields_sizes_card_filesize_Delete
+}
+
+type MediaFields_sizes_card_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_filename {
+  create: MediaFields_sizes_card_filename_Create
+  read: MediaFields_sizes_card_filename_Read
+  update: MediaFields_sizes_card_filename_Update
+  delete: MediaFields_sizes_card_filename_Delete
+}
+
+type MediaFields_sizes_card_filename_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_filename_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_filename_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_card_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet {
+  create: MediaFields_sizes_tablet_Create
+  read: MediaFields_sizes_tablet_Read
+  update: MediaFields_sizes_tablet_Update
+  delete: MediaFields_sizes_tablet_Delete
+  fields: MediaFields_sizes_tablet_Fields
+}
+
+type MediaFields_sizes_tablet_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_Fields {
+  url: MediaFields_sizes_tablet_url
+  width: MediaFields_sizes_tablet_width
+  height: MediaFields_sizes_tablet_height
+  mimeType: MediaFields_sizes_tablet_mimeType
+  filesize: MediaFields_sizes_tablet_filesize
+  filename: MediaFields_sizes_tablet_filename
+}
+
+type MediaFields_sizes_tablet_url {
+  create: MediaFields_sizes_tablet_url_Create
+  read: MediaFields_sizes_tablet_url_Read
+  update: MediaFields_sizes_tablet_url_Update
+  delete: MediaFields_sizes_tablet_url_Delete
+}
+
+type MediaFields_sizes_tablet_url_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_url_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_url_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_url_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_width {
+  create: MediaFields_sizes_tablet_width_Create
+  read: MediaFields_sizes_tablet_width_Read
+  update: MediaFields_sizes_tablet_width_Update
+  delete: MediaFields_sizes_tablet_width_Delete
+}
+
+type MediaFields_sizes_tablet_width_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_width_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_width_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_width_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_height {
+  create: MediaFields_sizes_tablet_height_Create
+  read: MediaFields_sizes_tablet_height_Read
+  update: MediaFields_sizes_tablet_height_Update
+  delete: MediaFields_sizes_tablet_height_Delete
+}
+
+type MediaFields_sizes_tablet_height_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_height_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_height_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_height_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_mimeType {
+  create: MediaFields_sizes_tablet_mimeType_Create
+  read: MediaFields_sizes_tablet_mimeType_Read
+  update: MediaFields_sizes_tablet_mimeType_Update
+  delete: MediaFields_sizes_tablet_mimeType_Delete
+}
+
+type MediaFields_sizes_tablet_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_filesize {
+  create: MediaFields_sizes_tablet_filesize_Create
+  read: MediaFields_sizes_tablet_filesize_Read
+  update: MediaFields_sizes_tablet_filesize_Update
+  delete: MediaFields_sizes_tablet_filesize_Delete
+}
+
+type MediaFields_sizes_tablet_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_filename {
+  create: MediaFields_sizes_tablet_filename_Create
+  read: MediaFields_sizes_tablet_filename_Read
+  update: MediaFields_sizes_tablet_filename_Update
+  delete: MediaFields_sizes_tablet_filename_Delete
+}
+
+type MediaFields_sizes_tablet_filename_Create {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_filename_Read {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_filename_Update {
+  permission: Boolean!
+}
+
+type MediaFields_sizes_tablet_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type audioAccess {
+  fields: AudioFields
+  create: AudioCreateAccess
+  read: AudioReadAccess
+  update: AudioUpdateAccess
+  delete: AudioDeleteAccess
+}
+
+type AudioFields {
+  url: AudioFields_url
+  filename: AudioFields_filename
+  mimeType: AudioFields_mimeType
+  filesize: AudioFields_filesize
+  width: AudioFields_width
+  height: AudioFields_height
+}
+
+type AudioFields_url {
+  create: AudioFields_url_Create
+  read: AudioFields_url_Read
+  update: AudioFields_url_Update
+  delete: AudioFields_url_Delete
+}
+
+type AudioFields_url_Create {
+  permission: Boolean!
+}
+
+type AudioFields_url_Read {
+  permission: Boolean!
+}
+
+type AudioFields_url_Update {
+  permission: Boolean!
+}
+
+type AudioFields_url_Delete {
+  permission: Boolean!
+}
+
+type AudioFields_filename {
+  create: AudioFields_filename_Create
+  read: AudioFields_filename_Read
+  update: AudioFields_filename_Update
+  delete: AudioFields_filename_Delete
+}
+
+type AudioFields_filename_Create {
+  permission: Boolean!
+}
+
+type AudioFields_filename_Read {
+  permission: Boolean!
+}
+
+type AudioFields_filename_Update {
+  permission: Boolean!
+}
+
+type AudioFields_filename_Delete {
+  permission: Boolean!
+}
+
+type AudioFields_mimeType {
+  create: AudioFields_mimeType_Create
+  read: AudioFields_mimeType_Read
+  update: AudioFields_mimeType_Update
+  delete: AudioFields_mimeType_Delete
+}
+
+type AudioFields_mimeType_Create {
+  permission: Boolean!
+}
+
+type AudioFields_mimeType_Read {
+  permission: Boolean!
+}
+
+type AudioFields_mimeType_Update {
+  permission: Boolean!
+}
+
+type AudioFields_mimeType_Delete {
+  permission: Boolean!
+}
+
+type AudioFields_filesize {
+  create: AudioFields_filesize_Create
+  read: AudioFields_filesize_Read
+  update: AudioFields_filesize_Update
+  delete: AudioFields_filesize_Delete
+}
+
+type AudioFields_filesize_Create {
+  permission: Boolean!
+}
+
+type AudioFields_filesize_Read {
+  permission: Boolean!
+}
+
+type AudioFields_filesize_Update {
+  permission: Boolean!
+}
+
+type AudioFields_filesize_Delete {
+  permission: Boolean!
+}
+
+type AudioFields_width {
+  create: AudioFields_width_Create
+  read: AudioFields_width_Read
+  update: AudioFields_width_Update
+  delete: AudioFields_width_Delete
+}
+
+type AudioFields_width_Create {
+  permission: Boolean!
+}
+
+type AudioFields_width_Read {
+  permission: Boolean!
+}
+
+type AudioFields_width_Update {
+  permission: Boolean!
+}
+
+type AudioFields_width_Delete {
+  permission: Boolean!
+}
+
+type AudioFields_height {
+  create: AudioFields_height_Create
+  read: AudioFields_height_Read
+  update: AudioFields_height_Update
+  delete: AudioFields_height_Delete
+}
+
+type AudioFields_height_Create {
+  permission: Boolean!
+}
+
+type AudioFields_height_Read {
+  permission: Boolean!
+}
+
+type AudioFields_height_Update {
+  permission: Boolean!
+}
+
+type AudioFields_height_Delete {
+  permission: Boolean!
+}
+
+type AudioCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AudioReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AudioUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type AudioDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type revista_categoriaAccess {
+  fields: RevistaCategoriaFields
+  create: RevistaCategoriaCreateAccess
+  read: RevistaCategoriaReadAccess
+  update: RevistaCategoriaUpdateAccess
+  delete: RevistaCategoriaDeleteAccess
+}
+
+type RevistaCategoriaFields {
+  categoriaNombre: RevistaCategoriaFields_categoriaNombre
+}
+
+type RevistaCategoriaFields_categoriaNombre {
+  create: RevistaCategoriaFields_categoriaNombre_Create
+  read: RevistaCategoriaFields_categoriaNombre_Read
+  update: RevistaCategoriaFields_categoriaNombre_Update
+  delete: RevistaCategoriaFields_categoriaNombre_Delete
+}
+
+type RevistaCategoriaFields_categoriaNombre_Create {
+  permission: Boolean!
+}
+
+type RevistaCategoriaFields_categoriaNombre_Read {
+  permission: Boolean!
+}
+
+type RevistaCategoriaFields_categoriaNombre_Update {
+  permission: Boolean!
+}
+
+type RevistaCategoriaFields_categoriaNombre_Delete {
+  permission: Boolean!
+}
+
+type RevistaCategoriaCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaCategoriaReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaCategoriaUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaCategoriaDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type revista_contentAccess {
+  fields: RevistaContentFields
+  create: RevistaContentCreateAccess
+  read: RevistaContentReadAccess
+  update: RevistaContentUpdateAccess
+  delete: RevistaContentDeleteAccess
+}
+
+type RevistaContentFields {
+  articulo: RevistaContentFields_articulo
+  position: RevistaContentFields_position
+  imagen: RevistaContentFields_imagen
+  magazineImage: RevistaContentFields_magazineImage
+  audio: RevistaContentFields_audio
+  audioFile: RevistaContentFields_audioFile
+  video: RevistaContentFields_video
+  urlVideo: RevistaContentFields_urlVideo
+  categoriaPrueba: RevistaContentFields_categoriaPrueba
+}
+
+type RevistaContentFields_articulo {
+  create: RevistaContentFields_articulo_Create
+  read: RevistaContentFields_articulo_Read
+  update: RevistaContentFields_articulo_Update
+  delete: RevistaContentFields_articulo_Delete
+}
+
+type RevistaContentFields_articulo_Create {
+  permission: Boolean!
+}
+
+type RevistaContentFields_articulo_Read {
+  permission: Boolean!
+}
+
+type RevistaContentFields_articulo_Update {
+  permission: Boolean!
+}
+
+type RevistaContentFields_articulo_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentFields_position {
+  create: RevistaContentFields_position_Create
+  read: RevistaContentFields_position_Read
+  update: RevistaContentFields_position_Update
+  delete: RevistaContentFields_position_Delete
+}
+
+type RevistaContentFields_position_Create {
+  permission: Boolean!
+}
+
+type RevistaContentFields_position_Read {
+  permission: Boolean!
+}
+
+type RevistaContentFields_position_Update {
+  permission: Boolean!
+}
+
+type RevistaContentFields_position_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentFields_imagen {
+  create: RevistaContentFields_imagen_Create
+  read: RevistaContentFields_imagen_Read
+  update: RevistaContentFields_imagen_Update
+  delete: RevistaContentFields_imagen_Delete
+}
+
+type RevistaContentFields_imagen_Create {
+  permission: Boolean!
+}
+
+type RevistaContentFields_imagen_Read {
+  permission: Boolean!
+}
+
+type RevistaContentFields_imagen_Update {
+  permission: Boolean!
+}
+
+type RevistaContentFields_imagen_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentFields_magazineImage {
+  create: RevistaContentFields_magazineImage_Create
+  read: RevistaContentFields_magazineImage_Read
+  update: RevistaContentFields_magazineImage_Update
+  delete: RevistaContentFields_magazineImage_Delete
+}
+
+type RevistaContentFields_magazineImage_Create {
+  permission: Boolean!
+}
+
+type RevistaContentFields_magazineImage_Read {
+  permission: Boolean!
+}
+
+type RevistaContentFields_magazineImage_Update {
+  permission: Boolean!
+}
+
+type RevistaContentFields_magazineImage_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentFields_audio {
+  create: RevistaContentFields_audio_Create
+  read: RevistaContentFields_audio_Read
+  update: RevistaContentFields_audio_Update
+  delete: RevistaContentFields_audio_Delete
+}
+
+type RevistaContentFields_audio_Create {
+  permission: Boolean!
+}
+
+type RevistaContentFields_audio_Read {
+  permission: Boolean!
+}
+
+type RevistaContentFields_audio_Update {
+  permission: Boolean!
+}
+
+type RevistaContentFields_audio_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentFields_audioFile {
+  create: RevistaContentFields_audioFile_Create
+  read: RevistaContentFields_audioFile_Read
+  update: RevistaContentFields_audioFile_Update
+  delete: RevistaContentFields_audioFile_Delete
+}
+
+type RevistaContentFields_audioFile_Create {
+  permission: Boolean!
+}
+
+type RevistaContentFields_audioFile_Read {
+  permission: Boolean!
+}
+
+type RevistaContentFields_audioFile_Update {
+  permission: Boolean!
+}
+
+type RevistaContentFields_audioFile_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentFields_video {
+  create: RevistaContentFields_video_Create
+  read: RevistaContentFields_video_Read
+  update: RevistaContentFields_video_Update
+  delete: RevistaContentFields_video_Delete
+}
+
+type RevistaContentFields_video_Create {
+  permission: Boolean!
+}
+
+type RevistaContentFields_video_Read {
+  permission: Boolean!
+}
+
+type RevistaContentFields_video_Update {
+  permission: Boolean!
+}
+
+type RevistaContentFields_video_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentFields_urlVideo {
+  create: RevistaContentFields_urlVideo_Create
+  read: RevistaContentFields_urlVideo_Read
+  update: RevistaContentFields_urlVideo_Update
+  delete: RevistaContentFields_urlVideo_Delete
+}
+
+type RevistaContentFields_urlVideo_Create {
+  permission: Boolean!
+}
+
+type RevistaContentFields_urlVideo_Read {
+  permission: Boolean!
+}
+
+type RevistaContentFields_urlVideo_Update {
+  permission: Boolean!
+}
+
+type RevistaContentFields_urlVideo_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentFields_categoriaPrueba {
+  create: RevistaContentFields_categoriaPrueba_Create
+  read: RevistaContentFields_categoriaPrueba_Read
+  update: RevistaContentFields_categoriaPrueba_Update
+  delete: RevistaContentFields_categoriaPrueba_Delete
+}
+
+type RevistaContentFields_categoriaPrueba_Create {
+  permission: Boolean!
+}
+
+type RevistaContentFields_categoriaPrueba_Read {
+  permission: Boolean!
+}
+
+type RevistaContentFields_categoriaPrueba_Update {
+  permission: Boolean!
+}
+
+type RevistaContentFields_categoriaPrueba_Delete {
+  permission: Boolean!
+}
+
+type RevistaContentCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaContentReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaContentUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type RevistaContentDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Mutation {
+  createUsuario(data: mutationUsuarioInput!, draft: Boolean): Usuario
+  updateUsuario(id: String!, data: mutationUsuarioUpdateInput!, draft: Boolean, autosave: Boolean): Usuario
+  deleteUsuario(id: String!): Usuario
+  refreshTokenUsuario(token: String): UsuariosRefreshedUsuario
+  logoutUsuario: String
+  unlockUsuario(email: String!): Boolean!
+  loginUsuario(email: String, password: String): UsuariosLoginResult
+  forgotPasswordUsuario(email: String!, disableEmail: Boolean, expiration: Int): Boolean!
+  resetPasswordUsuario(token: String, password: String): UsuariosResetPassword
+  verifyEmailUsuario(token: String): Boolean
+  createMedia(data: mutationMediaInput!, draft: Boolean): Media
+  updateMedia(id: String!, data: mutationMediaUpdateInput!, draft: Boolean, autosave: Boolean): Media
+  deleteMedia(id: String!): Media
+  createAudio(data: mutationAudioInput!, draft: Boolean): Audio
+  updateAudio(id: String!, data: mutationAudioUpdateInput!, draft: Boolean, autosave: Boolean): Audio
+  deleteAudio(id: String!): Audio
+  createRevistaCategoria(data: mutationRevistaCategoriaInput!, draft: Boolean): RevistaCategoria
+  updateRevistaCategoria(id: String!, data: mutationRevistaCategoriaUpdateInput!, draft: Boolean, autosave: Boolean): RevistaCategoria
+  deleteRevistaCategoria(id: String!): RevistaCategoria
+  createRevistaContent(data: mutationRevistaContentInput!, draft: Boolean): RevistaContent
+  updateRevistaContent(id: String!, data: mutationRevistaContentUpdateInput!, draft: Boolean, autosave: Boolean): RevistaContent
+  deleteRevistaContent(id: String!): RevistaContent
+  updatePreference(key: String!, value: JSON): Preference
+  deletePreference(key: String!): Preference
+}
+
+input mutationUsuarioInput {
+  role: Usuario_role_MutationInput
+  enableAPIKey: Boolean
+  apiKey: String
+  apiKeyIndex: String
+  email: String
+  resetPasswordToken: String
+  resetPasswordExpiration: String
+  loginAttempts: Float
+  lockUntil: String
+  password: String!
+}
+
+enum Usuario_role_MutationInput {
+  _30
+  _20
+  _10
+}
+
+input mutationUsuarioUpdateInput {
+  role: UsuarioUpdate_role_MutationInput
+  enableAPIKey: Boolean
+  apiKey: String
+  apiKeyIndex: String
+  email: String
+  resetPasswordToken: String
+  resetPasswordExpiration: String
+  loginAttempts: Float
+  lockUntil: String
+  password: String
+}
+
+enum UsuarioUpdate_role_MutationInput {
+  _30
+  _20
+  _10
+}
+
+type UsuariosRefreshedUsuario {
+  user: UsuariosJWT
+  refreshedToken: String
+  exp: Int
+}
+
+type UsuariosJWT {
+  role: UsuariosJWT_role
+  email: EmailAddress!
+  collection: String!
+}
+
+enum UsuariosJWT_role {
+  _30
+  _20
+  _10
+}
+
+type UsuariosLoginResult {
+  token: String
+  user: Usuario
+  exp: Int
+}
+
+type UsuariosResetPassword {
+  token: String
+  user: Usuario
+}
+
+input mutationMediaInput {
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+  sizes: mutationMedia_SizesInput
+}
+
+input mutationMedia_SizesInput {
+  thumbnail: mutationMedia_Sizes_ThumbnailInput
+  card: mutationMedia_Sizes_CardInput
+  tablet: mutationMedia_Sizes_TabletInput
+}
+
+input mutationMedia_Sizes_ThumbnailInput {
+  url: String
+  width: Float
+  height: Float
+  mimeType: String
+  filesize: Float
+  filename: String
+}
+
+input mutationMedia_Sizes_CardInput {
+  url: String
+  width: Float
+  height: Float
+  mimeType: String
+  filesize: Float
+  filename: String
+}
+
+input mutationMedia_Sizes_TabletInput {
+  url: String
+  width: Float
+  height: Float
+  mimeType: String
+  filesize: Float
+  filename: String
+}
+
+input mutationMediaUpdateInput {
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+  sizes: mutationMediaUpdate_SizesInput
+}
+
+input mutationMediaUpdate_SizesInput {
+  thumbnail: mutationMediaUpdate_Sizes_ThumbnailInput
+  card: mutationMediaUpdate_Sizes_CardInput
+  tablet: mutationMediaUpdate_Sizes_TabletInput
+}
+
+input mutationMediaUpdate_Sizes_ThumbnailInput {
+  url: String
+  width: Float
+  height: Float
+  mimeType: String
+  filesize: Float
+  filename: String
+}
+
+input mutationMediaUpdate_Sizes_CardInput {
+  url: String
+  width: Float
+  height: Float
+  mimeType: String
+  filesize: Float
+  filename: String
+}
+
+input mutationMediaUpdate_Sizes_TabletInput {
+  url: String
+  width: Float
+  height: Float
+  mimeType: String
+  filesize: Float
+  filename: String
+}
+
+input mutationAudioInput {
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+}
+
+input mutationAudioUpdateInput {
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+}
+
+input mutationRevistaCategoriaInput {
+  categoriaNombre: String
+}
+
+input mutationRevistaCategoriaUpdateInput {
+  categoriaNombre: String
+}
+
+input mutationRevistaContentInput {
+  articulo: String!
+  position: Float!
+  imagen: Boolean
+  magazineImage: String
+  audio: Boolean
+  audioFile: String
+  video: Boolean
+  urlVideo: String
+  categoriaPrueba: String
+}
+
+input mutationRevistaContentUpdateInput {
+  articulo: String
+  position: Float
+  imagen: Boolean
+  magazineImage: String
+  audio: Boolean
+  audioFile: String
+  video: Boolean
+  urlVideo: String
+  categoriaPrueba: String
+}
