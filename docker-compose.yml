@@ -5,19 +5,18 @@ services:
   payload:
     image: node:18-alpine
     ports:
-      - "3000:3000"
+      - "3050:3050"
     volumes:
       - .:/home/node/app
       - node_modules:/home/node/app/node_modules
     working_dir: /home/node/app/
-    command: sh -c "npm install && npm run dev"
+    command: sh -c "npm install && npm run build && npm run serve"
     depends_on:
       - mongo
     environment:
       MONGODB_URI: mongodb://mongo:27017/payload
-      PORT: 3000
-      NODE_ENV: development
-      PAYLOAD_SECRET: TESTING
+      PORT: 3050
+      PAYLOAD_SECRET: 3689a101ee69bb7c3b4403ad
 
   mongo:
     image: mongo:latest

@@ -171,4 +171,7 @@ dist
 src/audio/*
 src/media/*
 
+#VS Code Extensions
+.vscode
+
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode
