@@ -10,7 +10,7 @@ import TarifarioGlobal from './global/Tarifario';
 import { seed } from './seed';
 
 export default buildConfig({
-  serverURL: 'http://localhost:3050',
+  serverURL: 'https://panel.rendezvouscorp.com',
   admin: {
     user: Usuarios.slug,
     avatar: 'gravatar'
